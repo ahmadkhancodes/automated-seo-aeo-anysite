@@ -92,6 +92,29 @@ test("numbered headline must match numbered H2s", () => {
   assert.match(r.stdout, /Headline promises 5 items but the body has 4 numbered H2s/);
 });
 
+test("qa warns on duplicate headings and skipped heading levels", () => {
+  const dir = tmp();
+  run("init.mjs", ["--name", "T", "--url", "https://t.example"], dir);
+  const src = fs.readFileSync(path.join(example, "content/posts/ai-assisted-blog-posts-spam-policies.md"), "utf8");
+  fs.copyFileSync(path.join(example, "seo.config.json"), path.join(dir, "seo.config.json"));
+
+  // failing: duplicate heading and skipped level
+  const failing = src
+    .replace("## 2. Add something original to every post", "## 1. Put a human editor between the draft and the page")
+    .replace("## 3. Show who wrote it", "#### Skipped level heading");
+  fs.writeFileSync(path.join(dir, "content/posts/bad-outline.md"), failing);
+  const rFail = run("qa.mjs", ["bad-outline"], dir);
+  assert.match(rFail.stdout, /Duplicate heading "1\. Put a human editor between the draft and the page"/);
+  assert.match(rFail.stdout, /Skipped heading level: H4 "Skipped level heading" follows H2/);
+
+  // passing: no duplicates and proper nesting
+  const passing = src.replace("## 3. Show who wrote it", "### 3. Show who wrote it");
+  fs.writeFileSync(path.join(dir, "content/posts/good-outline.md"), passing);
+  const rPass = run("qa.mjs", ["good-outline"], dir);
+  assert.doesNotMatch(rPass.stdout, /Duplicate heading/);
+  assert.doesNotMatch(rPass.stdout, /Skipped heading level/);
+});
+
 test("keywords.mjs reads a UTF-16 Keyword Planner export, Trends and Search Console files", () => {
   const f = (n) => path.join(root, "tests", "fixtures", n);
   const out = path.join(tmp(), "kw.json");

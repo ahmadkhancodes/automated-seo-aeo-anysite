@@ -108,6 +108,26 @@ function checkPost(p, all) {
   const h2s = body.match(/^## .*$/gm) || [];
   if (h2s.length < num(R.minH2, type, 4)) err(`Only ${h2s.length} H2 sections (need ${num(R.minH2, type, 4)}+)`);
   if (/^# /m.test(body)) err("Body must not contain an H1 (#); the page renders the H1 from frontmatter");
+
+  // Heading outline: duplicate headings and skipped levels (warnings)
+  const headings = [...body.matchAll(/^(#{2,6}) +(.*)$/gm)].map((m) => ({ level: m[1].length, text: m[2].trim() }));
+  if (R.duplicateHeadings !== false) {
+    const seen = new Map();
+    for (const h of headings) {
+      const key = norm(h.text);
+      if (!key) continue;
+      if (seen.has(key)) warn(`Duplicate heading "${h.text}"`);
+      else seen.set(key, true);
+    }
+  }
+  if (R.skippedHeadingLevels !== false) {
+    let prev = 1; // body starts at H1 level contextually
+    for (const h of headings) {
+      if (h.level > prev + 1) warn(`Skipped heading level: H${h.level} "${h.text}" follows H${prev}`);
+      prev = h.level;
+    }
+  }
+
   const firstPara = prose.trim().split(/\n\s*\n/)[0] ?? "";
   const fpWords = firstPara.split(/\s+/).filter(Boolean).length;
   if (fpWords > 90) warn(`Opening paragraph is ${fpWords} words; lead with a direct 40–80 word answer`);

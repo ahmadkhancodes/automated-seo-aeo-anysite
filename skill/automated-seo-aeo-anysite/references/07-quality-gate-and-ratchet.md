@@ -10,6 +10,7 @@ What it checks (every threshold lives in `seo.config.json`):
 - **Links:** minimum internal links, required internal prefixes, a link to the pillar guide for cluster posts, no links to posts that do not exist.
 - **Visuals:** at least one table, image with alt text, or chart block.
 - **Human-sounding prose:** a list of stock phrases that read as machine-written (errors), overused filler words (warnings), em-dash cap, "not just X but Y" pattern, uniform sentence rhythm, placeholder text.
+- **Heading outline:** duplicate headings and skipped heading levels are warnings (for example `####` directly under `##`).
 - **One intent per post:** the same primary keyword or question as another post is an error; high similarity is an error or warning.
 - **Numbered headlines:** the number in the title must equal the number of numbered H2s.
 - **Year edition** and **conversion structure** (when enabled): see `05` and `06`.
