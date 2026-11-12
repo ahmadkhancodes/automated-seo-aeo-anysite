@@ -1,0 +1,26 @@
+{
+  "topics": [
+    {
+      "id": "example-pillar-guide",
+      "pillar": "example-pillar",
+      "type": "pillar",
+      "stage": "learn",
+      "question": "What is [topic], and how do you get started?",
+      "primaryKeyword": "[topic] guide",
+      "angle": "The complete beginner-to-confident guide; links to every cluster post in the pillar.",
+      "monthlySearches": 1000,
+      "status": "planned"
+    },
+    {
+      "id": "example-pillar-best-tools",
+      "pillar": "example-pillar",
+      "type": "cluster",
+      "stage": "buyer",
+      "question": "What are the best [tools] for [audience]?",
+      "primaryKeyword": "best [tools]",
+      "angle": "Buyer-stage. Name only real options, with every fact checked on the vendor's own page and dated. End with when building or doing it yourself wins.",
+      "monthlySearches": 2400,
+      "status": "planned"
+    }
+  ]
+}

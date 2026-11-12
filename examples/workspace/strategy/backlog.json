@@ -1,0 +1,26 @@
+{
+  "topics": [
+    {
+      "id": "content-quality-ai-assisted-posts-spam-policy",
+      "pillar": "content-quality",
+      "type": "cluster",
+      "stage": "learn",
+      "question": "How do you publish AI-assisted blog posts without breaking Google's spam policies?",
+      "primaryKeyword": "ai assisted blog posts google spam policies",
+      "angle": "Rules drawn only from Google's own documentation, with a numbered checklist.",
+      "status": "published",
+      "slug": "ai-assisted-blog-posts-spam-policies",
+      "publishedAt": "2026-11-12"
+    },
+    {
+      "id": "content-quality-content-audit-checklist",
+      "pillar": "content-quality",
+      "type": "cluster",
+      "stage": "solution",
+      "question": "What should a content quality audit check before you publish more posts?",
+      "primaryKeyword": "content quality audit",
+      "angle": "A practical audit checklist a small team can run in a day.",
+      "status": "planned"
+    }
+  ]
+}

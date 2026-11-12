@@ -1,0 +1,50 @@
+{
+  "site": { "name": "My Site", "url": "https://example.com", "language": "en", "description": "One sentence about what this site publishes and for whom." },
+  "paths": { "posts": "content/posts", "strategy": "strategy", "blogUrlPrefix": "/blog/" },
+  "program": { "postsPerDay": 3, "maxPerRun": 4, "startDate": "2000-01-01" },
+  "authors": {
+    "jane-doe": { "name": "Jane Doe", "role": "Editor", "type": "Person", "url": "/about/jane-doe", "sameAs": [] }
+  },
+  "pillars": [
+    { "slug": "example-pillar", "name": "Example pillar", "status": "active", "pillarPost": "example-pillar-guide" }
+  ],
+  "rules": {
+    "titleMax": 60,
+    "descriptionMin": 120,
+    "descriptionMax": 160,
+    "minWords": { "cluster": 1200, "pillar": 3000 },
+    "minH2": { "cluster": 4, "pillar": 6 },
+    "minFaqs": { "cluster": 3, "pillar": 5 },
+    "minSources": { "cluster": 3, "pillar": 6 },
+    "minInternalLinks": 3,
+    "minExternalLinks": 2,
+    "minTakeaways": 3,
+    "maxTakeaways": 6,
+    "requireVisual": true,
+    "requireReviewer": false,
+    "maxEmDashes": 4,
+    "requiredInternalPrefixes": [],
+    "ownDataLabels": ["our data", "our estimate", "our experience", "our benchmark"],
+    "humanizerLint": true
+  },
+  "yearEdition": {
+    "enabled": false,
+    "year": 2027,
+    "from": "2000-01-01",
+    "exempt": [],
+    "requireNumberInTitle": true,
+    "requireYearInDescription": true,
+    "requireYearInFirstParagraph": true,
+    "requireYearInH2": true,
+    "minMentions": 3,
+    "maxMentions": 14
+  },
+  "conversion": {
+    "enabled": true,
+    "from": "2000-01-01",
+    "requireNextStepSection": true,
+    "requireInternalPrefix": [],
+    "blockFakeUrgency": true
+  },
+  "ratchet": { "enabled": true, "window": 5, "from": "2000-01-01" }
+}

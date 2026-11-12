@@ -1,0 +1,14 @@
+{
+  "site": { "name": "Example Co", "url": "https://www.example.com", "language": "en", "description": "Example Co is a fictional publisher used to demonstrate the automated-seo-aeo-anysite workflow." },
+  "paths": { "posts": "content/posts", "strategy": "strategy", "blogUrlPrefix": "/blog/" },
+  "program": { "postsPerDay": 3, "maxPerRun": 4, "startDate": "2026-11-01" },
+  "authors": {
+    "jane-doe": { "name": "Jane Doe", "role": "Editor", "type": "Person", "url": "/about/jane-doe", "sameAs": [] }
+  },
+  "pillars": [
+    { "slug": "content-quality", "name": "Content quality", "status": "active" }
+  ],
+  "yearEdition": { "enabled": true, "year": 2027, "from": "2026-11-01" },
+  "conversion": { "enabled": true, "from": "2026-11-01", "requireInternalPrefix": ["/services/"] },
+  "ratchet": { "enabled": true, "window": 5, "from": "2026-11-01" }
+}
