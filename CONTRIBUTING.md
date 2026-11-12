@@ -24,7 +24,7 @@ Thanks for helping. This project is small on purpose: a skill (instructions), te
 ## Releasing (maintainers)
 1. Bump `version` in `package.json` **and** `.claude-plugin/plugin.json` (a test checks they match) and add a `CHANGELOG.md` entry.
 2. `npm test`, `npm run build:zip`, commit `dist/`.
-3. Tag `vX.Y.Z` and publish a GitHub release; `npm publish` ships the CLI.
+3. Tag `vX.Y.Z` and publish a GitHub release. The `publish` workflow then runs the tests and ships the CLI to npm with provenance (it needs the `NPM_TOKEN` repository secret and skips versions already on npm).
 
 ## Using AI tools
 AI-assisted contributions are welcome. You are responsible for every line you submit: run the tests, read the diff, and be ready to explain it in review. Say in the pull request if a tool wrote a large part of it.
