@@ -2,6 +2,30 @@
 
 The skill is the folder `skill/automated-seo-aeo-anysite/` (also packaged as `dist/automated-seo-aeo-anysite.zip`). It contains `SKILL.md`, `references/`, `templates/` and `scripts/`.
 
+## Fastest: Claude Code plugin
+In Claude Code, run:
+
+```
+/plugin install automated-seo-aeo-anysite --marketplace ahmadkhancodes/automated-seo-aeo-anysite
+```
+
+On Claude Code older than 2.1.275, use two steps instead:
+
+```
+/plugin marketplace add ahmadkhancodes/automated-seo-aeo-anysite
+/plugin install automated-seo-aeo-anysite@automated-seo-aeo-anysite
+```
+
+Get new releases with `/plugin update automated-seo-aeo-anysite`.
+
+## Also fast: npx (Node 18+)
+```bash
+npx automated-seo-aeo-anysite install            # copies the skill to ~/.claude/skills/
+npx automated-seo-aeo-anysite install --project  # or to ./.claude/skills/ for this project only
+```
+
+Add `--force` to replace an older copy. The same CLI runs the scripts (`npx automated-seo-aeo-anysite help`).
+
 ## Option A: Claude.ai or Claude desktop (skills)
 1. Download this repository (Code → Download ZIP) or just the file `dist/automated-seo-aeo-anysite.zip`.
 2. Open Claude's skill or capability settings and upload `automated-seo-aeo-anysite.zip`. (The zip's top-level folder is the skill folder, which is what skill uploads expect.)

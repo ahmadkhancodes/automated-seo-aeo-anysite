@@ -1,0 +1,34 @@
+name: Bug report
+description: A script, check or playbook does the wrong thing
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you ran, what you expected, and what you got instead.
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: How to reproduce
+      description: The command (for example `npx automated-seo-aeo-anysite qa`) and the smallest post, config or export file that shows the problem. Remove anything private.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `npx automated-seo-aeo-anysite --version`, or the release you downloaded.
+  - type: input
+    id: node
+    attributes:
+      label: Node version and OS
+      placeholder: Node 22, macOS 15
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where do you run the skill?
+      options: [Claude Code, Claude.ai or Claude desktop, Another chat assistant, Scripts only]

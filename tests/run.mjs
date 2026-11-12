@@ -146,11 +146,82 @@ test("llms-txt.mjs writes llms.txt and Markdown copies", () => {
 
 test("no brand or personal strings leak into the repository", () => {
   const banned = [/buffer\s?sol/i, /sufyan/i, /done[- ]for[- ]you/i, /ahmad/i];
+  // The maintainer's GitHub handle may appear only where it is needed to install or link the project
+  // (manifests, package metadata, README and community files), never in the skill, templates or examples.
+  const handle = /\bahmadkhancodes\b/gi;
+  const handleAllowed = new Set(["README.md", "package.json", "CONTRIBUTING.md", "CHANGELOG.md", "SECURITY.md", "CODE_OF_CONDUCT.md", "docs/INSTALL.md", "cli/index.mjs", ".claude-plugin/plugin.json", ".claude-plugin/marketplace.json", ".github/ISSUE_TEMPLATE/config.yml"]);
   const skip = new Set([".git", "node_modules", "dist"]);
   const walk = (d) => fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (skip.has(e.name) ? [] : e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)]));
   for (const f of walk(root)) {
     if (f === path.join(root, "tests", "run.mjs")) continue; // this file lists the banned patterns
-    const t = fs.readFileSync(f, "utf8");
-    for (const re of banned) assert.doesNotMatch(t, re, `${path.relative(root, f)} matches ${re}`);
+    const rel = path.relative(root, f).split(path.sep).join("/");
+    let t = fs.readFileSync(f, "utf8");
+    if (handleAllowed.has(rel)) t = t.replace(handle, "");
+    for (const re of banned) assert.doesNotMatch(t, re, `${rel} matches ${re}`);
   }
+});
+
+// ---------------------------------------------------------------- distribution: plugin, marketplace, CLI
+const readJson = (p) => JSON.parse(fs.readFileSync(path.join(root, p), "utf8"));
+const cli = (args, opts = {}) => spawnSync(process.execPath, [path.join(root, "cli", "index.mjs"), ...args], { encoding: "utf8", ...opts });
+
+test("plugin and marketplace manifests are consistent with package.json and point at the skill", () => {
+  const pkg = readJson("package.json");
+  const plugin = readJson(".claude-plugin/plugin.json");
+  const market = readJson(".claude-plugin/marketplace.json");
+  assert.equal(plugin.name, pkg.name);
+  assert.equal(plugin.version, pkg.version, "bump .claude-plugin/plugin.json together with package.json");
+  assert.equal(plugin.license, pkg.license);
+  for (const dir of plugin.skills) {
+    assert.match(dir, /^\.\//, "plugin paths must start with ./");
+    const skills = fs.readdirSync(path.join(root, dir)).filter((n) => fs.existsSync(path.join(root, dir, n, "SKILL.md")));
+    assert.ok(skills.includes(pkg.name), `${dir} must contain ${pkg.name}/SKILL.md`);
+  }
+  assert.ok(market.name && market.owner?.name, "marketplace needs name and owner.name");
+  const entry = market.plugins.find((p) => p.name === plugin.name);
+  assert.ok(entry, "marketplace must list the plugin");
+  assert.equal(entry.source, "./");
+  // A top-level bin/ folder stops claude.ai and Cowork from installing the plugin.
+  assert.equal(fs.existsSync(path.join(root, "bin")), false, "do not add a top-level bin/ folder; the CLI lives in cli/");
+});
+
+test("SKILL.md frontmatter has a name matching its folder and a description", () => {
+  const { fm, error } = parseFrontmatter(fs.readFileSync(path.join(root, "skill", "automated-seo-aeo-anysite", "SKILL.md"), "utf8"));
+  assert.equal(error, null);
+  assert.equal(fm.name, "automated-seo-aeo-anysite");
+  assert.ok(typeof fm.description === "string" && fm.description.length > 50 && fm.description.length <= 1024);
+});
+
+test("cli: help, version and unknown commands", () => {
+  const pkg = readJson("package.json");
+  const help = cli([]);
+  assert.equal(help.status, 0);
+  for (const c of ["install", "init", "keywords", "plan", "qa", "schema", "llms-txt"]) assert.match(help.stdout, new RegExp(`\\b${c}\\b`));
+  assert.equal(cli(["--version"]).stdout.trim(), pkg.version);
+  const bad = cli(["nope"]);
+  assert.equal(bad.status, 1);
+  assert.match(bad.stderr, /Unknown command: nope/);
+});
+
+test("cli: workspace commands pass arguments and exit codes through", () => {
+  const ok = cli(["qa"], { cwd: example });
+  assert.equal(ok.status, 0, ok.stdout + ok.stderr);
+  assert.match(ok.stdout, /All posts pass/);
+  const dir = tmp();
+  assert.equal(cli(["init", "--name", "T", "--url", "https://t.example", "--year", "2027"], { cwd: dir }).status, 0);
+  assert.ok(fs.existsSync(path.join(dir, "seo.config.json")));
+  fs.writeFileSync(path.join(dir, "content/posts/thin.md"), "---\ntitle: Thin\n---\nshort");
+  assert.equal(cli(["qa"], { cwd: dir }).status, 1, "a failing post must fail the CLI too");
+});
+
+test("cli: install copies the skill and refuses to overwrite without --force", () => {
+  const dir = tmp();
+  const first = cli(["install", "--project"], { cwd: dir });
+  assert.equal(first.status, 0, first.stderr);
+  const dest = path.join(dir, ".claude", "skills", "automated-seo-aeo-anysite");
+  for (const p of ["SKILL.md", "references", "scripts", "templates"]) assert.ok(fs.existsSync(path.join(dest, p)), p);
+  const again = cli(["install", "--project"], { cwd: dir });
+  assert.equal(again.status, 1);
+  assert.match(again.stderr, /--force/);
+  assert.equal(cli(["install", "--project", "--force"], { cwd: dir }).status, 0);
 });

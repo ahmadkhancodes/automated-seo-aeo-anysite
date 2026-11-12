@@ -1,0 +1,24 @@
+name: New keyword export format
+description: Ask for support for another keyword tool's export (Ahrefs, Semrush, Bing Webmaster Tools...)
+labels: [enhancement, parser]
+body:
+  - type: input
+    id: tool
+    attributes:
+      label: Tool and report
+      placeholder: Bing Webmaster Tools, Keyword Research export
+    validations:
+      required: true
+  - type: textarea
+    id: header
+    attributes:
+      label: Header row and two sample rows
+      description: Paste the header row exactly as exported and two rows with made-up values. Say the file encoding and separator if you know them.
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: docs
+    attributes:
+      label: Where the export comes from
+      description: Menu path in the tool, and a link to its documentation if there is one.

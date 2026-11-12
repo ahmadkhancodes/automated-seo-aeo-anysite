@@ -10,6 +10,7 @@ Thanks for helping. This project is small on purpose: a skill (instructions), te
 5. **Keep `SKILL.md` short.** Put detail in `references/` and open it only when needed.
 
 ## Workflow
+- Fork, branch, and open a pull request against `main`. The pull request template has a short checklist.
 - `npm test` must pass. Add a test for every new check or parser.
 - `npm run qa:example` must still pass on the example post.
 - If you change the skill folder, rebuild the zip: `npm run build:zip`, and commit `dist/`.
@@ -19,3 +20,14 @@ Thanks for helping. This project is small on purpose: a skill (instructions), te
 - New QA checks that catch real quality problems, with a test for the failing case and the passing case.
 - Translations of the humanizer lint list and of the playbooks.
 - Publishing recipes for specific CMSs.
+
+## Releasing (maintainers)
+1. Bump `version` in `package.json` **and** `.claude-plugin/plugin.json` (a test checks they match) and add a `CHANGELOG.md` entry.
+2. `npm test`, `npm run build:zip`, commit `dist/`.
+3. Tag `vX.Y.Z` and publish a GitHub release; `npm publish` ships the CLI.
+
+## Using AI tools
+AI-assisted contributions are welcome. You are responsible for every line you submit: run the tests, read the diff, and be ready to explain it in review. Say in the pull request if a tool wrote a large part of it.
+
+## Code of conduct
+Be kind and specific. See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
