@@ -167,6 +167,8 @@ export const DEFAULT_CONFIG = {
     requiredInternalPrefixes: [],
     ownDataLabels: ["our data", "our estimate", "our experience", "our benchmark", "our delivery data"],
     humanizerLint: true,
+    duplicateHeadings: true,
+    skippedHeadingLevels: true,
   },
   yearEdition: {
     enabled: false, year: new Date().getFullYear() + 1, from: "2000-01-01", exempt: [],

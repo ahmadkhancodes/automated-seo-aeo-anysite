@@ -126,6 +126,7 @@ automated-seo-aeo-anysite/
 |---|---|
 | **Search basics** | Title and description length, primary keyword in the title/H1 and opening, one search intent per URL (no duplicate or near-duplicate posts) |
 | **Answer-first (AEO)** | A direct opening answer, takeaways, FAQs of the right length, a share of question-shaped headings |
+| **Heading outline** | Warns on duplicate headings and skipped heading levels (for example `####` directly under `##`) |
 | **Evidence (GEO and trust)** | Minimum sources with https URLs, inline citations, **no statistic without a cited source**, no placeholder text |
 | **Links** | Internal links, links to your conversion pages, a link to the pillar guide, no links to posts that do not exist |
 | **Human voice** | Stock "AI phrases" blocked, filler words flagged, em-dash cap, sentence-rhythm check |
