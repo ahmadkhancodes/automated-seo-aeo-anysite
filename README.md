@@ -50,9 +50,13 @@ Download this repo (green **Code** button → *Download ZIP*) or clone it. The r
 
 | Where you use Claude | Do this |
 |---|---|
+| **Claude Code (plugin, recommended)** | Run `/plugin install automated-seo-aeo-anysite --marketplace ahmadkhancodes/automated-seo-aeo-anysite`. Updates arrive with `/plugin update` |
+| **Claude Code (npx)** | Run `npx automated-seo-aeo-anysite install` (all projects) or add `--project` (this project only) |
+| **Claude Code (manual)** | Copy the `skill/automated-seo-aeo-anysite` folder to `~/.claude/skills/` (all projects) or `.claude/skills/` (one project) |
 | **Claude.ai / Claude desktop** | In Claude's skill settings, upload `dist/automated-seo-aeo-anysite.zip` |
-| **Claude Code** | Copy the `skill/automated-seo-aeo-anysite` folder to `~/.claude/skills/` (all projects) or `.claude/skills/` (one project) |
 | **Anything else** | Start a chat and paste the contents of `SKILL.md`, then attach the `references/` files when asked |
+
+On Claude Code older than 2.1.275, add the marketplace first: `/plugin marketplace add ahmadkhancodes/automated-seo-aeo-anysite`, then `/plugin install automated-seo-aeo-anysite@automated-seo-aeo-anysite`.
 
 Step-by-step options: [docs/INSTALL.md](docs/INSTALL.md).
 
@@ -198,6 +202,16 @@ node /path/to/skill/scripts/plan.mjs
 node /path/to/skill/scripts/qa.mjs
 ```
 
+Or, without cloning anything, run the same scripts through the CLI (`npx automated-seo-aeo-anysite help` lists every command):
+
+```bash
+npx automated-seo-aeo-anysite init --name "Acme Gardens" --url https://acme.example --year 2027
+npx automated-seo-aeo-anysite plan
+npx automated-seo-aeo-anysite qa
+```
+
+Use it as a CI gate: `npx automated-seo-aeo-anysite qa` exits with code 1 when any post has a blocking error, so a pull request that adds a weak post fails its checks.
+
 ---
 
 ## 🤝 Honest by design
@@ -297,7 +311,7 @@ Set `site.language` in `seo.config.json`. The English-only "AI phrase" lint swit
 
 ## 🤲 Contributing
 
-Issues and pull requests are welcome: new export formats, new checks, better playbooks, translations. See [CONTRIBUTING.md](CONTRIBUTING.md). Please keep the project honest: no invented statistics, and cite primary sources for any claim about search engines.
+Issues and pull requests are welcome: new export formats, new checks, better playbooks, translations. See [CONTRIBUTING.md](CONTRIBUTING.md), and look for issues labelled [`good first issue`](../../issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) if you are new here. Please keep the project honest: no invented statistics, and cite primary sources for any claim about search engines.
 
 ## 📄 License
 

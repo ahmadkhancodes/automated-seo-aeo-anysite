@@ -1,0 +1,17 @@
+{
+  "name": "automated-seo-aeo-anysite",
+  "description": "An honest, automated SEO + AEO + GEO content engine skill for any website.",
+  "owner": {
+    "name": "ahmadkhancodes",
+    "url": "https://github.com/ahmadkhancodes"
+  },
+  "plugins": [
+    {
+      "name": "automated-seo-aeo-anysite",
+      "source": "./",
+      "description": "Interview, keyword strategy, researched and sourced posts, a quality gate and a learning loop for any site.",
+      "category": "marketing",
+      "tags": ["seo", "aeo", "geo", "content"]
+    }
+  ]
+}

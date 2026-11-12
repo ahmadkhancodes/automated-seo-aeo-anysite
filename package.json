@@ -1,14 +1,20 @@
 {
   "name": "automated-seo-aeo-anysite",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A Claude skill that runs an automated, honest SEO + AEO + GEO content program for any website.",
   "license": "MIT",
   "type": "module",
   "engines": { "node": ">=18" },
+  "bin": { "automated-seo-aeo-anysite": "cli/index.mjs" },
+  "files": ["cli/", "skill/", ".claude-plugin/", "README.md", "LICENSE"],
+  "repository": { "type": "git", "url": "git+https://github.com/ahmadkhancodes/automated-seo-aeo-anysite.git" },
+  "homepage": "https://github.com/ahmadkhancodes/automated-seo-aeo-anysite#readme",
+  "bugs": { "url": "https://github.com/ahmadkhancodes/automated-seo-aeo-anysite/issues" },
+  "author": "ahmadkhancodes (https://github.com/ahmadkhancodes)",
   "scripts": {
     "test": "node --test tests/run.mjs",
     "build:zip": "node scripts/build-zip.mjs",
     "qa:example": "cd examples/workspace && node ../../skill/automated-seo-aeo-anysite/scripts/qa.mjs"
   },
-  "keywords": ["seo", "aeo", "geo", "claude", "skill", "content", "keyword-research", "llms-txt", "schema-org"]
+  "keywords": ["seo", "aeo", "geo", "claude", "claude-code", "claude-skill", "agent-skills", "skill", "content", "keyword-research", "llms-txt", "schema-org"]
 }
